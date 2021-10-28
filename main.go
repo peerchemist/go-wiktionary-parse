@@ -140,6 +140,7 @@ func main() {
 	check(err)
 	dbh.SetMaxOpenConns(1)
 
+	//TODO: REFACTOR FROM ID TO UUID SO THAT WORDS CAN BE UPDATED MONTHLY.
 	sth, err := dbh.Prepare(`CREATE TABLE IF NOT EXISTS dictionary
                              (
                                  id INTEGER PRIMARY KEY,
@@ -147,7 +148,9 @@ func main() {
                                  lexical_category TEXT,
                                  etymology_no INTEGER,
                                  definition_no INTEGER,
-                                 definition TEXT
+                                 definition TEXT,
+				 blockchainhash TEXT,
+				 nfthash TEXT
                              )`)
 	check(err)
 	sth.Exec()
