@@ -66,6 +66,9 @@ Usage of wiktionary-parser:
 | etymology\_no  | integer | 
 | definition\_no | integer |
 | definition     | text    |
+| blockchainhash | text    |
+| nfthash        | text    |
+
 
 - Primary key is on ID
 - Index is setup over word, lemma, etymology\_no, definition\_no
