@@ -143,7 +143,7 @@ func main() {
 	//TODO: REFACTOR FROM ID TO UUID SO THAT WORDS CAN BE UPDATED MONTHLY.
 	sth, err := dbh.Prepare(`CREATE TABLE IF NOT EXISTS dictionary
                              (
-                                 id INTEGER PRIMARY KEY,
+                                 id UUID_STRING PRIMARY KEY,
                                  word TEXT,
                                  lexical_category TEXT,
                                  etymology_no INTEGER,
