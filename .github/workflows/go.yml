@@ -23,3 +23,24 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+      
+      
+  userflow:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set Up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+      
+    - name: Install
+      run: go install ./...
+      
+    - name: do it
+      run: |
+        wget https://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-pages-articles.xml.bz2
+        bzip2 -d enwiktionary-latest-pages-articles.xml.bz2
+        go-wiktionary-parse -file enwiktionary-latest-pages-articles.xml -threads 4 -database test.db
+      
