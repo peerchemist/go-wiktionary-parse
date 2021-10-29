@@ -45,8 +45,6 @@ Usage of wiktionary-parser:
 - ColorLog: https://github.com/macdub/go-colorlog
 - Sqlite3: https://github.com/mattn/go-sqlite3
 
-### Build
-`$ go build -o wiktionary-parser main.go`
 
 ## Current Limitations
 - It only looks at 14 lemmas
@@ -60,7 +58,7 @@ Usage of wiktionary-parser:
 
 | COLUMN         | TYPE    |
 |:--------------:|:-------:|
-| id             | integer |
+| id             | uuid_string |
 | word           | text    |
 | lemma          | text    |
 | etymology\_no  | integer | 
