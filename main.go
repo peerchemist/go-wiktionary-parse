@@ -186,7 +186,7 @@ func main() {
 	var wg sync.WaitGroup
 	for i := 0; i < *threads; i++ {
 		wg.Add(1)
-		go pageWorker(uuid.NewUUID(), &wg, chunks[i], dbh)
+		go pageWorker(uuid.NewUUID().String(), &wg, chunks[i], dbh)
 	}
 
 	wg.Wait()
@@ -195,7 +195,7 @@ func main() {
 	logger.Info("Completed in %s\n", end_time.Sub(start_time))
 }
 
-func pageWorker(id int, wg *sync.WaitGroup, pages []Page, dbh *sql.DB) {
+func pageWorker(uuid string, wg *sync.WaitGroup, pages []Page, dbh *sql.DB) {
 	defer wg.Done()
 	inserts := []*Insert{} // etymology : lexical category : [definitions...]
 	for _, page := range pages {
