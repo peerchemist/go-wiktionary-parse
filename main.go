@@ -255,7 +255,7 @@ func pageWorker(uuid string, wg *sync.WaitGroup, pages []Page, dbh *sql.DB) {
 
 	// perform inserts
 	inserted := performInserts(dbh, inserts)
-	logger.Info("[%2d] Inserted %6d records for %6d pages\n", id, inserted, len(pages))
+	logger.Info("[%2d] Inserted %6d records for %6d pages\n", uuid, inserted, len(pages))
 }
 
 func performInserts(dbh *sql.DB, inserts []*Insert) int {
