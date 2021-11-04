@@ -43,4 +43,9 @@ jobs:
         wget https://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-pages-articles.xml.bz2
         bzip2 -d enwiktionary-latest-pages-articles.xml.bz2
         go-wiktionary-parse -file enwiktionary-latest-pages-articles.xml -threads 4 -database test.db
+    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+        
+    
       
