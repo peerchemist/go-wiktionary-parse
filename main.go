@@ -14,9 +14,11 @@ import (
 	"sync"
 	"time"
 
+	"go-wikitionary-parse/lib/wikitemplates"
+
 	"github.com/macdub/go-colorlog"
 	_ "github.com/mattn/go-sqlite3"
-	"go-wikitionary-parse/lib/wikitemplates"
+	"github.com/pborman/uuid"
 )
 
 var (
@@ -61,7 +63,7 @@ type Page struct {
 }
 
 type Revision struct {
-	Id      int    `xml:"id"`
+	Uuid    string `xml:"uuid"`
 	Comment string `xml:"comment"`
 	Model   string `xml:"model"`
 	Format  string `xml:"format"`
@@ -143,7 +145,7 @@ func main() {
 	//TODO: REFACTOR FROM ID TO UUID SO THAT WORDS CAN BE UPDATED MONTHLY.
 	sth, err := dbh.Prepare(`CREATE TABLE IF NOT EXISTS dictionary
                              (
-                                 id UUID_STRING PRIMARY KEY,
+                                 uuid STRING PRIMARY KEY,
                                  word TEXT,
                                  lexical_category TEXT,
                                  etymology_no INTEGER,
@@ -184,7 +186,7 @@ func main() {
 	var wg sync.WaitGroup
 	for i := 0; i < *threads; i++ {
 		wg.Add(1)
-		go pageWorker(i, &wg, chunks[i], dbh)
+		go pageWorker(uuid.NewUUID(), &wg, chunks[i], dbh)
 	}
 
 	wg.Wait()
