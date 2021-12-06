@@ -1,10 +1,10 @@
 # go-wiktionary-parse
-This is a tool to parse language dumps from Wiktionary and store the results into a Sqlite database.
 
+This is a tool to parse language dumps from Wiktionary and store the results into a Sqlite database.
 
 ## Quickstart
 
-```
+```bash
 git clone https://github.com/faddat/go-wiktionary-parse
 cd go-wikitionary-parse
 wget https://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-pages-articles.xml.bz2
@@ -13,10 +13,9 @@ go install .
 go-wiktionary-parse -file enwiktionary-latest-pages-articles.xml -threads 20 -database test.db
 ```
 
-
-
 ## Usage
-```
+
+```text
 Usage of wiktionary-parser:
     -cache_file string
         Use this as the cache file (default "xmlCache.gob")
@@ -41,37 +40,41 @@ Usage of wiktionary-parser:
 ```
 
 ## Build
-### Dependencies
-- ColorLog: https://github.com/macdub/go-colorlog
-- Sqlite3: https://github.com/mattn/go-sqlite3
 
+### Dependencies
+
+- [ColorLog](https://github.com/macdub/go-colorlog)
+- [Sqlite3](https://github.com/mattn/go-sqlite3)
 
 ## Current Limitations
+
 - It only looks at 14 lemmas
 - Does not clean the definition. Meaning it looks like raw wiki markup. This is something that will be fixed in the near future.
 
 ## Database
+
 - [Pre-Built Databases](http://www.mcdojoh.com/wiktionary_dbs)
 
 ### Structure
+
 - table name: dictionary
 
 | COLUMN         | TYPE    |
 |:--------------:|:-------:|
-| id             | uuid_string |
+| id             | string  |
 | word           | text    |
 | lemma          | text    |
-| etymology\_no  | integer | 
+| etymology\_no  | integer |
 | definition\_no | integer |
 | definition     | text    |
 | blockchainhash | text    |
 | nfthash        | text    |
 
-
 - Primary key is on ID
 - Index is setup over word, lemma, etymology\_no, definition\_no
 
 ### Statistics
+
 - The database (20200506) file that is built is ~127MB (51MB compressed)
   - 914,799 words
   - 1,098,087 definitions

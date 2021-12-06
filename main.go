@@ -16,9 +16,9 @@ import (
 
 	"go-wikitionary-parse/lib/wikitemplates"
 
+	"github.com/google/uuid"
 	"github.com/macdub/go-colorlog"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/pborman/uuid"
 )
 
 var (
@@ -29,15 +29,15 @@ var (
 	wikiEtymologyS *regexp.Regexp = regexp.MustCompile(`(\s===|^===)Etymology===`)     // check for singular etymology
 	wikiEtymologyM *regexp.Regexp = regexp.MustCompile(`(\s===|^===)Etymology \d+===`) // these heading may or may not have a number designation
 	wikiNumListAny *regexp.Regexp = regexp.MustCompile(`\s##?[\*:]*? `)                // used to find all num list indices
-	wikiNumList    *regexp.Regexp = regexp.MustCompile(`\s#[^:\*] `)                   // used to find the num list entries that are of concern
-	wikiGenHeading *regexp.Regexp = regexp.MustCompile(`(\s=+|^=+)[\w\s]+`)            // generic heading search
+	//	wikiNumList    *regexp.Regexp = regexp.MustCompile(`\s#[^:\*] `)                   // used to find the num list entries that are of concern
+	wikiGenHeading *regexp.Regexp = regexp.MustCompile(`(\s=+|^=+)[\w\s]+`) // generic heading search
 	wikiNewLine    *regexp.Regexp = regexp.MustCompile(`\n`)
 	wikiBracket    *regexp.Regexp = regexp.MustCompile(`[\[\]]+`)
 	wikiWordAlt    *regexp.Regexp = regexp.MustCompile(`\[\[([\w\s]+)\|[\w\s]+\]\]`)
 	wikiModifier   *regexp.Regexp = regexp.MustCompile(`\{\{m\|\w+\|([\w\s]+)\}\}`)
-	wikiLabel      *regexp.Regexp = regexp.MustCompile(`\{\{(la?b?e?l?)\|\w+\|([\w\s\|'",;\(\)_\[\]-]+)\}\}`)
-	wikiTplt       *regexp.Regexp = regexp.MustCompile(`\{\{|\}\}`) // open close template bounds "{{ ... }}"
-	wikiExample    *regexp.Regexp = regexp.MustCompile(`\{\{examples(.+)\}\}`)
+	//	wikiLabel      *regexp.Regexp = regexp.MustCompile(`\{\{(la?b?e?l?)\|\w+\|([\w\s\|'",;\(\)_\[\]-]+)\}\}`)
+	//	wikiTplt       *regexp.Regexp = regexp.MustCompile(`\{\{|\}\}`) // open close template bounds "{{ ... }}"
+	wikiExample *regexp.Regexp = regexp.MustCompile(`\{\{examples(.+)\}\}`)
 	//wikiRefs       *regexp.Regexp = regexp.MustCompile(`\<ref\>(.*?)\</ref\>`)
 	htmlBreak *regexp.Regexp = regexp.MustCompile(`\<br\>`)
 
@@ -186,8 +186,10 @@ func main() {
 	var wg sync.WaitGroup
 	for i := 0; i < *threads; i++ {
 		wg.Add(1)
-		uuid := uuid.NewUUID().String()
-		go pageWorker(uuid, &wg, chunks[i], dbh)
+		uuid := uuid.New()
+		struuid := uuid.String()
+		fmt.Println(struuid)
+		go pageWorker(struuid, &wg, chunks[i], dbh)
 	}
 
 	wg.Wait()
