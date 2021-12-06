@@ -186,7 +186,8 @@ func main() {
 	var wg sync.WaitGroup
 	for i := 0; i < *threads; i++ {
 		wg.Add(1)
-		go pageWorker(uuid.NewUUID().String(), &wg, chunks[i], dbh)
+		uuid := uuid.NewUUID().String()
+		go pageWorker(uuid, &wg, chunks[i], dbh)
 	}
 
 	wg.Wait()
