@@ -63,7 +63,7 @@ type Page struct {
 }
 
 type Revision struct {
-	Uuid    string `xml:"uuid"`
+	Id      string `xml:"id"`
 	Comment string `xml:"comment"`
 	Model   string `xml:"model"`
 	Format  string `xml:"format"`
